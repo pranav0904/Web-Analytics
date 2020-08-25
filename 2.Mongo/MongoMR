@@ -1,0 +1,42 @@
+
+MAP REduce:
+
+1. Most Active IP
+
+var map = function(){
+emit(this.IP,1);
+};
+
+
+var reduce = function(key,values){
+var count = 0;
+values.forEach(function(i){
+count +=i;
+});
+return count;
+};
+
+
+db.AccessLogs.mapReduce(map,reduce, {out: "MostActiveIP"})
+
+--------------------------------------------------------------------------------------------------
+
+2. Most Demanded Resource
+
+var map = function(){
+emit(this.Resource,1);
+};
+
+
+var reduce = function(key,values){
+var cnt = 0;
+values.forEach(function(i){
+cnt +=i;
+});
+return {"Count": cnt };
+};
+
+db.AccessLogs.mapReduce(map,reduce, {out: "MostDemandedResource"})
+
+
+
